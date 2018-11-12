@@ -4,11 +4,12 @@ import org.testng.annotations.Test;
 import ro.nila.base.TestBase;
 import ro.nila.utilities.Commands;
 
-public class FirstTest extends TestBase {
+
+public class SecondTest extends TestBase {
 
     @Test
-    public void firstTest(){
-        System.out.println("\nInside FIRST test\n");
+    public void SecondTest(){
+        System.out.println("\nInside SECOND test\n");
         Commands.clickElement("ui.lf.landingPage.loginButton.css");
     }
 }
