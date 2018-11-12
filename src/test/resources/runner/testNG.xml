@@ -1,0 +1,15 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="SeleniumAT">
+
+    <listeners>
+        <listener class-name="ro.nila.listeners.CustomListeners"/>
+    </listeners>
+
+    <test name="First Test">
+        <classes>
+            <class name="ro.nila.tests.FirstTest" />
+        </classes>
+    </test>
+
+</suite>
