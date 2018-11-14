@@ -69,7 +69,7 @@ public  class PropertiesManager {
         driver.get(config.getProperty("sng9"));
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(Integer.parseInt(config.getProperty("implicit.wait")), TimeUnit.SECONDS);
-        driverWait = new WebDriverWait(driver, 10);
+        driverWait = new WebDriverWait(driver, 20);
 
         System.out.println("Driver and Browser setUp");
     }
@@ -99,6 +99,15 @@ public  class PropertiesManager {
                 e.printStackTrace();
             }
         }
+    }
+
+    public static String getUsername(){
+        System.out.println(config.getProperty("username"));
+        return config.getProperty("username");
+    }
+
+    public static String getPasswrod(){
+        return config.getProperty("password");
     }
 
 }
