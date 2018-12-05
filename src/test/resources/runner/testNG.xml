@@ -1,15 +1,21 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 
-<suite name="SeleniumAT">
+<suite name="SeleniumAT" thread-count="1" verbose="1">
 
     <listeners>
         <listener class-name="ro.nila.listeners.CustomListeners"/>
     </listeners>
 
-    <test name="First Test">
+    <test name="Test1">
         <classes>
             <class name="ro.nila.tests.FirstTest" />
         </classes>
     </test>
 
-</suite>
+    <test name="Test2">
+        <classes>
+            <class name="ro.nila.tests.SecondTest" />
+        </classes>
+    </test> <!-- Test -->
+
+</suite> <!-- Suite -->
