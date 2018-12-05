@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testng-results skipped="0" failed="0" ignored="2" total="4" passed="2">
+  <reporter-output>
+  </reporter-output>
+  <suite name="Surefire suite" duration-ms="46685" started-at="2018-12-05T07:35:15Z" finished-at="2018-12-05T07:36:02Z">
+    <groups>
+    </groups>
+    <test name="Surefire test" duration-ms="46685" started-at="2018-12-05T07:35:15Z" finished-at="2018-12-05T07:36:02Z">
+      <class name="ro.nila.tests.FirstTest">
+        <test-method status="PASS" signature="beforeSuite()[pri:0, instance:ro.nila.tests.FirstTest@6537cf78]" name="beforeSuite" is-config="true" duration-ms="51" started-at="2018-12-05T09:35:15Z" finished-at="2018-12-05T09:35:15Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- beforeSuite -->
+        <test-method status="PASS" signature="beforeMethod()[pri:0, instance:ro.nila.tests.FirstTest@6537cf78]" name="beforeMethod" is-config="true" duration-ms="15820" started-at="2018-12-05T09:35:15Z" finished-at="2018-12-05T09:35:31Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- beforeMethod -->
+        <test-method status="PASS" signature="testOne()[pri:0, instance:ro.nila.tests.FirstTest@6537cf78]" name="testOne" duration-ms="8568" started-at="2018-12-05T09:35:31Z" finished-at="2018-12-05T09:35:40Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testOne -->
+        <test-method status="PASS" signature="tearDownAfterMethod()[pri:0, instance:ro.nila.tests.FirstTest@6537cf78]" name="tearDownAfterMethod" is-config="true" duration-ms="82" started-at="2018-12-05T09:35:40Z" finished-at="2018-12-05T09:35:40Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- tearDownAfterMethod -->
+        <test-method status="PASS" signature="tearDownAfterSuite()[pri:0, instance:ro.nila.tests.FirstTest@6537cf78]" name="tearDownAfterSuite" is-config="true" duration-ms="974" started-at="2018-12-05T09:36:02Z" finished-at="2018-12-05T09:36:03Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- tearDownAfterSuite -->
+      </class> <!-- ro.nila.tests.FirstTest -->
+      <class name="ro.nila.tests.SecondTest">
+        <test-method status="PASS" signature="beforeMethod()[pri:0, instance:ro.nila.tests.SecondTest@67b6d4ae]" name="beforeMethod" is-config="true" duration-ms="9083" started-at="2018-12-05T09:35:40Z" finished-at="2018-12-05T09:35:49Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- beforeMethod -->
+        <test-method status="PASS" signature="testTwo()[pri:0, instance:ro.nila.tests.SecondTest@67b6d4ae]" name="testTwo" duration-ms="12724" started-at="2018-12-05T09:35:49Z" finished-at="2018-12-05T09:36:02Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testTwo -->
+        <test-method status="PASS" signature="tearDownAfterMethod()[pri:0, instance:ro.nila.tests.SecondTest@67b6d4ae]" name="tearDownAfterMethod" is-config="true" duration-ms="382" started-at="2018-12-05T09:36:02Z" finished-at="2018-12-05T09:36:02Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- tearDownAfterMethod -->
+      </class> <!-- ro.nila.tests.SecondTest -->
+    </test> <!-- Surefire test -->
+  </suite> <!-- Surefire suite -->
+</testng-results>
