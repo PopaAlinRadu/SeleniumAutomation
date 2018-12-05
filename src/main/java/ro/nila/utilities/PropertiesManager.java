@@ -5,6 +5,7 @@ import com.relevantcodes.extentreports.ExtentTest;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Wait;
+import ro.nila.utilities.configuration.ExtentManager;
 
 import java.io.IOException;
 import java.util.Properties;
@@ -15,7 +16,7 @@ public abstract class PropertiesManager {
     public static WebDriver webDriver;
     public static Wait driverWait;
     public static Properties config, ui, txt;
-    public ExtentReports report;
+    public static ExtentReports report;
     public ExtentTest test;
 
     /*
@@ -34,6 +35,7 @@ public abstract class PropertiesManager {
             ui = new Properties();
         }
         return ui;
+
     }
 
     public static Properties getConfigProperties() {
@@ -70,5 +72,4 @@ public abstract class PropertiesManager {
             System.out.println("Quit driver");
         }
     }
-
 }

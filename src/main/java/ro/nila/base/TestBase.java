@@ -1,5 +1,6 @@
 package ro.nila.base;
 
+import com.relevantcodes.extentreports.LogStatus;
 import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
@@ -8,26 +9,24 @@ import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
 import ro.nila.utilities.PropertiesManager;
-import ro.nila.utilities.configuration.ConfigManager;
-import ro.nila.utilities.configuration.TxtManager;
-import ro.nila.utilities.configuration.UiElementsManager;
-import ro.nila.utilities.configuration.WebDriverManager;
+import ro.nila.utilities.configuration.*;
 
 import java.io.IOException;
 
-import static ro.nila.utilities.PropertiesManager.closeWebDriver;
-import static ro.nila.utilities.PropertiesManager.quitWebDriver;
-
-public abstract class TestBase implements ITestListener {
+import static ro.nila.utilities.PropertiesManager.*;
 
 
-    public static PropertiesManager uiElementsManager, txtManager, configManager, webDriverManager, report, test;
+public class TestBase extends PropertiesManager implements ITestListener {
+
+
+    public static PropertiesManager uiElementsManager, txtManager, configManager, webDriverManager;
 
     static{
         configManager = new ConfigManager();
         txtManager = new TxtManager();
         uiElementsManager = new UiElementsManager();
         webDriverManager = new WebDriverManager();
+        report = ExtentManager.getInstance();
     }
 
     // Needs to contain:
@@ -59,11 +58,15 @@ public abstract class TestBase implements ITestListener {
     @Override
     public void onTestStart(ITestResult iTestResult) {
         System.out.println("onTestStart ");
+        test = report.startTest(iTestResult.getName().toUpperCase());
     }
 
     @Override
     public void onTestSuccess(ITestResult iTestResult) {
         System.out.println("onTestSucces");
+        test.log(LogStatus.PASS, "Test " + iTestResult.getName().toUpperCase() + " passed");
+        report.endTest(test);
+        report.flush();
     }
 
     @Override
