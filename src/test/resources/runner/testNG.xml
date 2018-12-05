@@ -2,9 +2,9 @@
 
 <suite name="TestSelenium" thread-count="1" verbose="1">
 
-    <!--<listeners>-->
-        <!--<listener class-name="ro.nila.listeners.CustomListeners"/>-->
-    <!--</listeners>-->
+    <listeners>
+        <listener class-name="ro.nila.base.TestBase"/>
+    </listeners>
 
     <test name="Test1">
         <classes>
