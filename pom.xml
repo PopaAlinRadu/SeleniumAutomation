@@ -6,7 +6,7 @@
 <artifactId>SeleniumAT</artifactId>
 <version>1.0-SNAPSHOT</version>
 
-<name>DataDrivenFramework</name>
+<name>Selenium Automation Framework</name>
 <!-- FIXME change it to the project's website -->
 <url></url>
 
@@ -39,6 +39,11 @@
         <artifactId>extentreports</artifactId>
         <version>2.41.2</version>
     </dependency>
+    <dependency>
+        <groupId>org.testng</groupId>
+        <artifactId>testng</artifactId>
+        <version>6.11</version>
+    </dependency>
 
 
 </dependencies>
@@ -47,17 +52,18 @@
     <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
         <plugins>
 
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.18.1</version>
-                <configuration>
-                    <testFailureIgnore>false</testFailureIgnore>
-                    <suiteXmlFiles>
-                        <suiteXmlFile>src/test/resources/runner/testng.xml</suiteXmlFile>
-                    </suiteXmlFiles>
-                </configuration>
-            </plugin>
+            <!-- BELOW plugin to generate surefire reports-->
+            <!--<plugin>-->
+                <!--<groupId>org.apache.maven.plugins</groupId>-->
+                <!--<artifactId>maven-surefire-plugin</artifactId>-->
+                <!--<version>2.18.1</version>-->
+                <!--<configuration>-->
+                    <!--<testFailureIgnore>false</testFailureIgnore>-->
+                    <!--<suiteXmlFiles>-->
+                        <!--<suiteXmlFile>src/test/resources/runner/testng.xml</suiteXmlFile>-->
+                    <!--</suiteXmlFiles>-->
+                <!--</configuration>-->
+            <!--</plugin>-->
 
             <plugin>
                 <artifactId>maven-clean-plugin</artifactId>
