@@ -1,10 +1,12 @@
 package ro.nila.actions;
 
+import com.relevantcodes.extentreports.LogStatus;
 import org.openqa.selenium.By;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
+import static ro.nila.base.TestBase.*;
 import static ro.nila.utilities.PropertiesManager.*;
 
 public class Commands {
@@ -15,10 +17,12 @@ public class Commands {
             webElement = webDriver.findElement(By.cssSelector(getValue(locator)));
             webElement.click();
             System.out.println("Element '" + locator + "' found and clicked");
+            test.log(LogStatus.INFO, "Element " + locator + " found and clicked");
         } catch (StaleElementReferenceException sere) {
             webElement = waitElementToBeClickable(webDriver.findElement(By.cssSelector(getValue(locator))));
             webElement.click();
             System.out.println("Element '" + locator + "' found and clicked");
+            test.log(LogStatus.INFO, "Element " + locator + " found and clicked");
         } catch (Exception e) {
             System.out.println("'" + locator + "' element is not found.");
             throw (e);

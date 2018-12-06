@@ -1,11 +1,8 @@
 package ro.nila.utilities;
 
-import com.relevantcodes.extentreports.ExtentReports;
-import com.relevantcodes.extentreports.ExtentTest;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Wait;
-import ro.nila.utilities.configuration.ExtentManager;
 
 import java.io.IOException;
 import java.util.Properties;
@@ -16,8 +13,7 @@ public abstract class PropertiesManager {
     public static WebDriver webDriver;
     public static Wait driverWait;
     public static Properties config, ui, txt;
-    public static ExtentReports report;
-    public ExtentTest test;
+
 
     /*
     //  Implementation in subclasses to load:

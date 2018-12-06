@@ -2,12 +2,14 @@ package ro.nila.utilities.configuration;
 
 import com.relevantcodes.extentreports.DisplayOrder;
 import com.relevantcodes.extentreports.ExtentReports;
-import ro.nila.utilities.PropertiesManager;
 
 import java.io.File;
-import java.io.IOException;
 
-public class ExtentManager extends PropertiesManager{
+
+public class ExtentManager {
+
+    public static ExtentReports report;
+
 
     public static ExtentReports getInstance(){
         if (report == null){

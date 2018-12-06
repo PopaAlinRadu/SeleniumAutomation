@@ -1,32 +1,39 @@
 package ro.nila.base;
 
+import com.relevantcodes.extentreports.ExtentReports;
+import com.relevantcodes.extentreports.ExtentTest;
 import com.relevantcodes.extentreports.LogStatus;
 import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.AfterSuite;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.BeforeSuite;
+import org.testng.annotations.*;
 import ro.nila.utilities.PropertiesManager;
-import ro.nila.utilities.configuration.*;
+import ro.nila.utilities.configuration.ConfigManager;
+import ro.nila.utilities.configuration.TxtManager;
+import ro.nila.utilities.configuration.UiElementsManager;
+import ro.nila.utilities.configuration.WebDriverManager;
 
 import java.io.IOException;
 
-import static ro.nila.utilities.PropertiesManager.*;
+import static ro.nila.utilities.PropertiesManager.closeWebDriver;
+import static ro.nila.utilities.PropertiesManager.quitWebDriver;
+import static ro.nila.utilities.Utilities.getTestName;
+import static ro.nila.utilities.configuration.ExtentManager.getInstance;
+import static ro.nila.utilities.configuration.ExtentManager.report;
 
-
-public class TestBase extends PropertiesManager implements ITestListener {
+public class TestBase implements ITestListener {
 
 
     public static PropertiesManager uiElementsManager, txtManager, configManager, webDriverManager;
+    public static ExtentReports reports;
+    public static ExtentTest test;
 
-    static{
+
+    static {
         configManager = new ConfigManager();
         txtManager = new TxtManager();
         uiElementsManager = new UiElementsManager();
         webDriverManager = new WebDriverManager();
-        report = ExtentManager.getInstance();
     }
 
     // Needs to contain:
@@ -37,23 +44,33 @@ public class TestBase extends PropertiesManager implements ITestListener {
         uiElementsManager.loadConfiguration();
         txtManager.loadConfiguration();
         configManager.loadConfiguration();
+        reports = getInstance();
+    }
+
+    @BeforeClass()
+    public void beforeClass(){
+        init();
     }
 
     @BeforeMethod
-    public void beforeMethod() throws IOException{
+    public void beforeMethod() throws IOException {
         webDriverManager.loadConfiguration();
+        test = reports.startTest(getTestName(this.getClass().getDeclaredMethods()));
     }
 
     @AfterMethod
-    public void tearDownAfterMethod(){
+    public void tearDownAfterMethod() {
         closeWebDriver();
     }
 
     @AfterSuite
-    public void tearDownAfterSuite(){
+    public void tearDownAfterSuite() {
         quitWebDriver();
+        report.endTest(test);
+        report.flush();
     }
 
+    //------------------------------------------------------------------------//
     // Methods from ITestListener interface
     @Override
     public void onTestStart(ITestResult iTestResult) {
@@ -72,6 +89,9 @@ public class TestBase extends PropertiesManager implements ITestListener {
     @Override
     public void onTestFailure(ITestResult iTestResult) {
         System.out.println("onTestFailure");
+        test.log(LogStatus.FAIL, "Test " + iTestResult.getName().toUpperCase() + " failed");
+        report.endTest(test);
+        report.flush();
     }
 
     @Override
@@ -92,5 +112,9 @@ public class TestBase extends PropertiesManager implements ITestListener {
     @Override
     public void onFinish(ITestContext iTestContext) {
         System.out.println("onFinish");
+    }
+
+    public void init(){
+        // to be overridden in subclasses
     }
 }

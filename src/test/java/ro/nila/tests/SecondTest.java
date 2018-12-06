@@ -6,23 +6,24 @@ import ro.nila.actions.Commands;
 import ro.nila.base.TestBase;
 import ro.nila.business.Account;
 
+import static ro.nila.utilities.Utilities.getTestName;
+
 public class SecondTest extends TestBase {
 
+    Account account;
+    String fullName;
+
+    @Override
+    public void init() {
+        account = new Account();
+        fullName = (account.getFirstName() + " " + account.getSecondName());
+    }
+
     @Test
-    public void testTwo(){
+    public void testTwo() {
+        System.out.println("----> INSIDE TEST: " + getTestName(this.getClass().getDeclaredMethods()) + " <----");
 
-        Account account = new Account();
-        String fullName = (account.getFirstName() + " " + account.getSecondName());
-//------------------------------------------------------------//
-        String methodName = new Object() {}                   //
-                .getClass()                                   //
-                .getEnclosingMethod()                         //
-                .getName();                                   //
-//------------------------------------------------------------//
-
-        System.out.println("----> INSIDE TEST: " + methodName + " <----");
-
-        //      STEPS:
+        //  STEPS:
         //  Click on Login button from landing page
         Commands.clickElement("ui.lf.landingPage.loginButton.css");
         //  Click to accept cookies
@@ -42,7 +43,7 @@ public class SecondTest extends TestBase {
         //  Enter username
         Commands.typeValue("ui.lf.loginPage.usernameField.css", account.getUsername());
         //  Enter wrong password
-        Commands.typeValue("ui.lf.loginPage.passwordField.css", account.getPassword()+ "wrong");
+        Commands.typeValue("ui.lf.loginPage.passwordField.css", account.getPassword() + "wrong");
         //  Login
         Commands.clickElement("ui.lf.loginPage.loginButton.css");
         //  Check that a error message is shown for invalid credentials
