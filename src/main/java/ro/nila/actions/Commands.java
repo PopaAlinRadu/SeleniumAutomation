@@ -1,28 +1,24 @@
 package ro.nila.actions;
 
-import com.relevantcodes.extentreports.LogStatus;
 import org.openqa.selenium.By;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
-import static ro.nila.base.TestBase.*;
 import static ro.nila.utilities.PropertiesManager.*;
 
-public class Commands {
+public class Commands extends CommonActions {
 
     //  Method used to click on elements based on a locator
     public static void clickElement(String locator) {
         try {
             webElement = webDriver.findElement(By.cssSelector(getValue(locator)));
             webElement.click();
-            System.out.println("Element '" + locator + "' found and clicked");
-            test.log(LogStatus.INFO, "Element " + locator + " found and clicked");
+            logSteps(locator);
         } catch (StaleElementReferenceException sere) {
             webElement = waitElementToBeClickable(webDriver.findElement(By.cssSelector(getValue(locator))));
             webElement.click();
-            System.out.println("Element '" + locator + "' found and clicked");
-            test.log(LogStatus.INFO, "Element " + locator + " found and clicked");
+            logSteps(locator);
         } catch (Exception e) {
             System.out.println("'" + locator + "' element is not found.");
             throw (e);
@@ -55,37 +51,6 @@ public class Commands {
         }
     }
 
-    //  ---------------------Methods to waits for elements-----------------------
 
-    //  Method used to wait for an element to be clickable before click on it
-    protected static WebElement waitElementToBeClickable(WebElement element) {
-        driverWait.until(ExpectedConditions.elementToBeClickable(element));
-        return element;
-    }
-
-    //  Method used to wait for an element to have the exact text value
-    protected static WebElement waitElementTextToBe(By by, String value) {
-        driverWait.until(ExpectedConditions.textToBe(by, value));
-        return webDriver.findElement(by);
-    }
-
-    //  Method used to wait for multiple elements to be present on the DOM
-    protected static WebElement waitForElementsPresent(By by) {
-        driverWait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(by));
-        return webDriver.findElement(by);
-    }
-
-    //  Method used to wait for a single element to be present on the DOM
-    public static WebElement waitForElementPresent(By by) {
-        driverWait.until(ExpectedConditions.presenceOfElementLocated(by));
-        return webDriver.findElement(by);
-    }
-
-    // ----------------------------------------------------------------------
-
-    //  Method that get the text from an WebElement
-    static String getTextFromElement(WebElement webElement) {
-        return webElement.getText();
-    }
 
 }

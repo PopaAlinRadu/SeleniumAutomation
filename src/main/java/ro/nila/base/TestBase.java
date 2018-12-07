@@ -17,7 +17,6 @@ import java.io.IOException;
 
 import static ro.nila.utilities.PropertiesManager.closeWebDriver;
 import static ro.nila.utilities.PropertiesManager.quitWebDriver;
-import static ro.nila.utilities.Utilities.getTestName;
 import static ro.nila.utilities.configuration.ExtentManager.getInstance;
 import static ro.nila.utilities.configuration.ExtentManager.report;
 
@@ -55,7 +54,6 @@ public class TestBase implements ITestListener {
     @BeforeMethod
     public void beforeMethod() throws IOException {
         webDriverManager.loadConfiguration();
-        test = reports.startTest(getTestName(this.getClass().getDeclaredMethods()));
     }
 
     @AfterMethod
@@ -66,8 +64,6 @@ public class TestBase implements ITestListener {
     @AfterSuite
     public void tearDownAfterSuite() {
         quitWebDriver();
-        report.endTest(test);
-        report.flush();
     }
 
     //------------------------------------------------------------------------//
@@ -75,33 +71,31 @@ public class TestBase implements ITestListener {
     @Override
     public void onTestStart(ITestResult iTestResult) {
         System.out.println("onTestStart ");
-        test = report.startTest(iTestResult.getName().toUpperCase());
+        test = report.startTest(iTestResult.getInstanceName());
+        test.log(LogStatus.PASS, "Starting test: " + iTestResult.getMethod().getMethodName());
     }
 
     @Override
     public void onTestSuccess(ITestResult iTestResult) {
         System.out.println("onTestSucces");
-        test.log(LogStatus.PASS, "Test " + iTestResult.getName().toUpperCase() + " passed");
-        report.endTest(test);
-        report.flush();
+        test.log(LogStatus.PASS, "Ended Test: " + iTestResult.getMethod().getMethodName() + " passed");
     }
 
     @Override
     public void onTestFailure(ITestResult iTestResult) {
         System.out.println("onTestFailure");
-        test.log(LogStatus.FAIL, "Test " + iTestResult.getName().toUpperCase() + " failed");
-        report.endTest(test);
-        report.flush();
+        test.log(LogStatus.FAIL, "Ended Test: " + iTestResult.getMethod().getMethodName() + " failed");
     }
 
     @Override
     public void onTestSkipped(ITestResult iTestResult) {
         System.out.println("onTestSkipped");
+        test.log(LogStatus.SKIP, "Ended Test: " + iTestResult.getMethod().getMethodName() + " skipped");
     }
 
     @Override
     public void onTestFailedButWithinSuccessPercentage(ITestResult iTestResult) {
-        System.out.println("onTestFailedButWithinSuccessPercentage");
+        //  Do nothing yet
     }
 
     @Override
@@ -112,8 +106,14 @@ public class TestBase implements ITestListener {
     @Override
     public void onFinish(ITestContext iTestContext) {
         System.out.println("onFinish");
+        report.endTest(test);
+        report.flush();
     }
 
+    /*
+    Method that will run before each testMethod
+    to make setup for the test
+     */
     public void init(){
         // to be overridden in subclasses
     }

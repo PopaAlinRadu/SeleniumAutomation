@@ -7,7 +7,7 @@ import static ro.nila.actions.Commands.waitElementTextToBe;
 import static ro.nila.utilities.PropertiesManager.getValue;
 import static ro.nila.utilities.PropertiesManager.webElement;
 
-public class Checkpoints {
+public class Checkpoints extends CommonActions {
 
     public static void checkElementContainsExactText(String locator, String expectedText, String checkpointName) {
 

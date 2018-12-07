@@ -8,13 +8,13 @@
 
     <test name="Test1">
         <classes>
-            <class name="ro.nila.tests.FirstTest" />
+            <class name="ro.nila.tests.CheckUserNameOnProfilePage" />
         </classes>
     </test>
 
     <test name="Test2">
         <classes>
-            <class name="ro.nila.tests.SecondTest" />
+            <class name="ro.nila.tests.LoginWithValidAndInvalidCredentials" />
         </classes>
     </test> <!-- Test -->
 

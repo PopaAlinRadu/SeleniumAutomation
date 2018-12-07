@@ -8,7 +8,7 @@ import ro.nila.business.Account;
 
 import static ro.nila.utilities.Utilities.getTestName;
 
-public class SecondTest extends TestBase {
+public class CheckUserNameOnProfilePage extends TestBase {
 
     Account account;
     String fullName;
@@ -19,8 +19,8 @@ public class SecondTest extends TestBase {
         fullName = (account.getFirstName() + " " + account.getSecondName());
     }
 
-    @Test
-    public void testTwo() {
+    @Test(description = "On user profile page the name should be displayed and correct")
+    public void testToCheckUserNameOnProfilePage() {
         System.out.println("----> INSIDE TEST: " + getTestName(this.getClass().getDeclaredMethods()) + " <----");
 
         //  STEPS:
@@ -40,14 +40,6 @@ public class SecondTest extends TestBase {
         Checkpoints.checkElementContainsExactText("ui.lf.profile.name", fullName, "Name is displayed and correct");
         //  Logout
         Commands.clickElement("ui.lf.homePage.logoutButton.css");
-        //  Enter username
-        Commands.typeValue("ui.lf.loginPage.usernameField.css", account.getUsername());
-        //  Enter wrong password
-        Commands.typeValue("ui.lf.loginPage.passwordField.css", account.getPassword() + "wrong");
-        //  Login
-        Commands.clickElement("ui.lf.loginPage.loginButton.css");
-        //  Check that a error message is shown for invalid credentials
-        Checkpoints.checkElementContainsExactText("ui.lf.loginPage.login.fail.css", "txt.lf.loginPage.login.fail", "Error message for invalid credentials");
 
         System.out.println("---> TEST FINISHED <---");
     }

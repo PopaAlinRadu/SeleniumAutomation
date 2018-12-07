@@ -8,7 +8,7 @@ import ro.nila.business.Account;
 
 import static ro.nila.utilities.Utilities.getTestName;
 
-public class FirstTest extends TestBase {
+public class LoginWithValidAndInvalidCredentials extends TestBase {
 
     Account account;
     String fullName;
@@ -19,8 +19,8 @@ public class FirstTest extends TestBase {
         fullName = (account.getFirstName() + " " + account.getSecondName());
     }
 
-    @Test
-    public void testOne() {
+    @Test(description = "Check that can login with valid credential and not with invalid")
+    public void testToCheckLogin() {
         System.out.println("----> INSIDE TEST: " + getTestName(this.getClass().getDeclaredMethods()) + " <----");
 
         //  STEPS:
@@ -34,10 +34,6 @@ public class FirstTest extends TestBase {
         Commands.typeValue("ui.lf.loginPage.passwordField.css", account.getPassword());
         //  Login
         Commands.clickElement("ui.lf.loginPage.loginButton.css");
-        //  Click on Name from Start page
-        Commands.clickElement("ui.lf.start.name.css");
-        //  Check that we are on the profile page
-        Checkpoints.checkElementContainsExactText("ui.lf.profile.name", fullName, "Name is displayed and correct");
         //  Logout
         Commands.clickElement("ui.lf.homePage.logoutButton.css");
         //  Enter username
