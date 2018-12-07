@@ -6,23 +6,24 @@ import ro.nila.actions.Commands;
 import ro.nila.base.TestBase;
 import ro.nila.business.Account;
 
-public class SecondTest extends TestBase {
+import static ro.nila.utilities.Utilities.getTestName;
 
-    @Test
-    public void testTwo(){
+public class LoginWithValidAndInvalidCredentials extends TestBase {
 
-        Account account = new Account();
-        String fullName = (account.getFirstName() + " " + account.getSecondName());
-//------------------------------------------------------------//
-        String methodName = new Object() {}                   //
-                .getClass()                                   //
-                .getEnclosingMethod()                         //
-                .getName();                                   //
-//------------------------------------------------------------//
+    Account account;
+    String fullName;
 
-        System.out.println("----> INSIDE TEST: " + methodName + " <----");
+    @Override
+    public void init() {
+        account = new Account();
+        fullName = (account.getFirstName() + " " + account.getSecondName());
+    }
 
-        //      STEPS:
+    @Test(description = "Check that can login with valid credential and not with invalid")
+    public void testToCheckLogin() {
+        System.out.println("----> INSIDE TEST: " + getTestName(this.getClass().getDeclaredMethods()) + " <----");
+
+        //  STEPS:
         //  Click on Login button from landing page
         Commands.clickElement("ui.lf.landingPage.loginButton.css");
         //  Click to accept cookies
@@ -33,16 +34,12 @@ public class SecondTest extends TestBase {
         Commands.typeValue("ui.lf.loginPage.passwordField.css", account.getPassword());
         //  Login
         Commands.clickElement("ui.lf.loginPage.loginButton.css");
-        //  Click on Name from Start page
-        Commands.clickElement("ui.lf.start.name.css");
-        //  Check that we are on the profile page
-        Checkpoints.checkElementContainsExactText("ui.lf.profile.name", fullName, "Name is displayed and correct");
         //  Logout
         Commands.clickElement("ui.lf.homePage.logoutButton.css");
         //  Enter username
         Commands.typeValue("ui.lf.loginPage.usernameField.css", account.getUsername());
         //  Enter wrong password
-        Commands.typeValue("ui.lf.loginPage.passwordField.css", account.getPassword()+ "wrong");
+        Commands.typeValue("ui.lf.loginPage.passwordField.css", account.getPassword() + "wrong");
         //  Login
         Commands.clickElement("ui.lf.loginPage.loginButton.css");
         //  Check that a error message is shown for invalid credentials

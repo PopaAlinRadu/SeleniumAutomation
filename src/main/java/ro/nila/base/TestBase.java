@@ -1,12 +1,12 @@
 package ro.nila.base;
 
+import com.relevantcodes.extentreports.ExtentReports;
+import com.relevantcodes.extentreports.ExtentTest;
+import com.relevantcodes.extentreports.LogStatus;
 import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.AfterSuite;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.BeforeSuite;
+import org.testng.annotations.*;
 import ro.nila.utilities.PropertiesManager;
 import ro.nila.utilities.configuration.ConfigManager;
 import ro.nila.utilities.configuration.TxtManager;
@@ -17,13 +17,18 @@ import java.io.IOException;
 
 import static ro.nila.utilities.PropertiesManager.closeWebDriver;
 import static ro.nila.utilities.PropertiesManager.quitWebDriver;
+import static ro.nila.utilities.configuration.ExtentManager.getInstance;
+import static ro.nila.utilities.configuration.ExtentManager.report;
 
-public abstract class TestBase implements ITestListener {
+public class TestBase implements ITestListener {
 
 
-    public static PropertiesManager uiElementsManager, txtManager, configManager, webDriverManager, report, test;
+    public static PropertiesManager uiElementsManager, txtManager, configManager, webDriverManager;
+    public static ExtentReports reports;
+    public static ExtentTest test;
 
-    static{
+
+    static {
         configManager = new ConfigManager();
         txtManager = new TxtManager();
         uiElementsManager = new UiElementsManager();
@@ -38,47 +43,59 @@ public abstract class TestBase implements ITestListener {
         uiElementsManager.loadConfiguration();
         txtManager.loadConfiguration();
         configManager.loadConfiguration();
+        reports = getInstance();
+    }
+
+    @BeforeClass()
+    public void beforeClass(){
+        init();
     }
 
     @BeforeMethod
-    public void beforeMethod() throws IOException{
+    public void beforeMethod() throws IOException {
         webDriverManager.loadConfiguration();
     }
 
     @AfterMethod
-    public void tearDownAfterMethod(){
+    public void tearDownAfterMethod() {
         closeWebDriver();
     }
 
     @AfterSuite
-    public void tearDownAfterSuite(){
+    public void tearDownAfterSuite() {
         quitWebDriver();
     }
 
+    //------------------------------------------------------------------------//
     // Methods from ITestListener interface
     @Override
     public void onTestStart(ITestResult iTestResult) {
         System.out.println("onTestStart ");
+        test = report.startTest(iTestResult.getInstanceName());
+        test.log(LogStatus.PASS, "Starting test: " + iTestResult.getMethod().getMethodName());
     }
 
     @Override
     public void onTestSuccess(ITestResult iTestResult) {
         System.out.println("onTestSucces");
+        test.log(LogStatus.PASS, "Ended Test: " + iTestResult.getMethod().getMethodName() + " passed");
     }
 
     @Override
     public void onTestFailure(ITestResult iTestResult) {
         System.out.println("onTestFailure");
+        test.log(LogStatus.FAIL, "Ended Test: " + iTestResult.getMethod().getMethodName() + " failed");
     }
 
     @Override
     public void onTestSkipped(ITestResult iTestResult) {
         System.out.println("onTestSkipped");
+        test.log(LogStatus.SKIP, "Ended Test: " + iTestResult.getMethod().getMethodName() + " skipped");
     }
 
     @Override
     public void onTestFailedButWithinSuccessPercentage(ITestResult iTestResult) {
-        System.out.println("onTestFailedButWithinSuccessPercentage");
+        //  Do nothing yet
     }
 
     @Override
@@ -89,5 +106,15 @@ public abstract class TestBase implements ITestListener {
     @Override
     public void onFinish(ITestContext iTestContext) {
         System.out.println("onFinish");
+        report.endTest(test);
+        report.flush();
+    }
+
+    /*
+    Method that will run before each testMethod
+    to make setup for the test
+     */
+    public void init(){
+        // to be overridden in subclasses
     }
 }
