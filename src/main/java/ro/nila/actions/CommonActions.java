@@ -15,7 +15,7 @@ public abstract class CommonActions {
 
     protected static void logSteps(String locator){
         if(test != null){
-            System.out.println("inside test not null should log");
+            System.out.println("inside test not null should log in extent");
             test.log(LogStatus.INFO, "Element " + locator + " found and clicked");
         } else{
             // TODO - implement logger
