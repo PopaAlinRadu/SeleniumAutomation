@@ -19,7 +19,7 @@ public class WebDriverManager extends PropertiesManager {
         System.setProperty(ChromeDriverService.CHROME_DRIVER_EXE_PROPERTY, System.getProperty("user.dir") + "\\src\\main\\resources\\executables\\chromedriver.exe");
         webDriver = new ChromeDriver();
         webDriver.manage().deleteAllCookies();
-        webDriver.get(getValue("config.sng9"));
+        webDriver.get(getValue("config.application.url"));
         webDriver.manage().window().maximize();
         webDriver.manage().timeouts().pageLoadTimeout(Integer.parseInt(getValue("config.driver.wait")), TimeUnit.SECONDS);
         webDriver.manage().timeouts().setScriptTimeout(Integer.parseInt(getValue("config.driver.wait")), TimeUnit.SECONDS);
