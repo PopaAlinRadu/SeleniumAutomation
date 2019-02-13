@@ -39,10 +39,12 @@ public class Commands extends CommonActions {
     public static void typeValue(String locator, String value) {
         try {
             webElement = webDriver.findElement(By.cssSelector(getValue(locator)));
+            webElement.clear();
             webElement.sendKeys(value);
             System.out.println("Entered value: " + value + " into element: " + locator);
         } catch (StaleElementReferenceException sere) {
             webElement = waitForElementPresent(By.cssSelector(getValue(locator)));
+            webElement.clear();
             webElement.sendKeys(value);
             System.out.println("Entered value: " + value + " into element: " + locator);
         } catch (Exception e) {

@@ -6,8 +6,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import static ro.nila.base.TestBase.test;
-import static ro.nila.utilities.PropertiesManager.driverWait;
-import static ro.nila.utilities.PropertiesManager.webDriver;
+import static ro.nila.utilities.PropertiesManager.*;
 
 public abstract class CommonActions {
 
@@ -15,12 +14,12 @@ public abstract class CommonActions {
 
     protected static void logSteps(String locator){
         if(test != null){
-            System.out.println("inside test not null should log in extent");
-            test.log(LogStatus.INFO, "Element " + locator + " found and clicked");
+            System.out.println("LoggerInfo: inside test not null should log in extent");
+            test.log(LogStatus.INFO, "-> Element " + locator + " found and clicked");
         } else{
             // TODO - implement logger
-            System.out.println("inside test equal null should write in console");
-            System.out.println("Element '" + locator + "' found and clicked");
+            System.out.println("LoggerInfo: inside test equal null should write in console");
+            System.out.println("-> Element '" + locator + "' found and clicked");
         }
     }
 
@@ -48,6 +47,11 @@ public abstract class CommonActions {
     public static WebElement waitForElementPresent(By by) {
         driverWait.until(ExpectedConditions.presenceOfElementLocated(by));
         return webDriver.findElement(by);
+    }
+
+    //  Method used to wait for the URL to be fully loaded
+    public static void waitForUrl(String url) {
+        driverWait.until(ExpectedConditions.urlToBe(getValue(url)));
     }
 
     //  ---------------------Methods TODO -------------------------------------------
