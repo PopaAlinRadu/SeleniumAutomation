@@ -1,65 +1,71 @@
 package ro.nila.actions;
 
 import org.openqa.selenium.By;
+import ro.nila.business.Actions;
 import ro.nila.business.ElementsState;
 
+import static ro.nila.business.Actions.*;
+import static ro.nila.business.ElementsState.*;
 import static ro.nila.utilities.PropertiesManager.getValue;
 import static ro.nila.utilities.PropertiesManager.*;
+import static ro.nila.utilities.Utilities.*;
 
 public class Checkpoints extends CommonActions {
 
     //  Check the URL that we pass as parameter with the one that driver get if from browser
-    public static void checkUrl(String url) {
-        waitForUrl(url);
-        checkPathEquality(getValue(url), webDriver.getCurrentUrl());
+    public static void checkUrl(String expectedUrl) {
+        expectedUrl = getValue(expectedUrl);            // http://localhost:4200/homed
+        String actualUrl = webDriver.getCurrentUrl();  // http://localhost:4200/home
+        waitForUrl(expectedUrl, actualUrl);
+        checkPathEquality(expectedUrl, actualUrl);
     }
 
-    public static void checkElementContainsExactText(String locator, String expectedText, String checkpointName) {
-
-        webElement = waitElementTextToBe(By.cssSelector(getValue(locator)), getValue(expectedText));
+    //  Check that inner text of an element match the exact expectedText
+    public static void checkElementContainsExactText(String locator, String expectedText) {
+        expectedText = getValue(expectedText);
+//        webElement = waitElementTextToBe(By.cssSelector(getValue(locator)), expectedText);
+        webElement = waitForElementPresent(By.cssSelector(getValue(locator)), locator);
         String actualText = getTextFromElement(webElement);
-
-        checkEquality(expectedText, actualText, checkpointName, locator);
+        checkEquality(locator, expectedText, actualText);
     }
 
     //  Check that an element have the following states: Enabled/Disabled, Displayed/Hidden, Selected/Deselected.
     public static void checkElementState(String locator, ElementsState state) {
-        webElement = waitForElementPresent(By.cssSelector(getValue(locator)));
-
+        webElement = waitForElementPresent(By.cssSelector(getValue(locator)), locator);
         switch (state) {
             case ENABLED:
                 if (webElement.isEnabled())
-                    statePass(locator, state);
+                    updatedLogSuccessSteps(locator, ENABLED.getState() , ENABLED.getState(), STATE);
                 else
                     stateFail(locator, state);
                 break;
             case DISABLED:
                 if (!webElement.isEnabled())
-                    statePass(locator, state);
+                    updatedLogSuccessSteps(locator, ENABLED.getOppositeState() , ENABLED.getOppositeState(), STATE);
                 else
                     stateFail(locator, state);
                 break;
             case DISPLAYED:
                 if (webElement.isDisplayed())
-                    statePass(locator, state);
+                    updatedLogSuccessSteps(locator, DISPLAYED.getState() , DISPLAYED.getState(), STATE);
                 else
                     stateFail(locator, state);
                 break;
             case HIDDEN:
                 if (!webElement.isDisplayed())
-                    statePass(locator, state);
+                    updatedLogSuccessSteps(locator, DISPLAYED.getOppositeState() , DISPLAYED.getOppositeState(), STATE);
                 else
                     stateFail(locator, state);
                 break;
             case SELECTED:
                 if (webElement.isSelected())
-                    statePass(locator, state);
+                    updatedLogSuccessSteps(locator, SELECTED.getState() , SELECTED.getState(), STATE);
                 else
                     stateFail(locator, state);
                 break;
             case DESELECTED:
                 if (!webElement.isSelected())
-                    statePass(locator, state);
+                    updatedLogSuccessSteps(locator, DESELECTED.getOppositeState() , DESELECTED.getOppositeState(), STATE);
                 else
                     stateFail(locator, state);
                 break;
@@ -67,47 +73,29 @@ public class Checkpoints extends CommonActions {
     }
 
     //  Check that a string we pass is equal with the one that a specify element contains
-    private static void checkEquality(String expectedText, String actualText, String checkpointName, String locator) {
-
-        String text = getValue(expectedText);
-
-        if (actualText != null && actualText.equals(text)) {
-            pass(checkpointName, locator);
+    private static void checkEquality(String locator, String expectedText, String actualText) {
+        if (expectedText.equals(actualText)) {
+            pass(locator, expectedText, actualText, Actions.COMPARE_TEXT);
         } else {
-            fail(expectedText, actualText, locator);
+            fail(locator, expectedText, actualText, COMPARE_TEXT);
         }
     }
 
     private static void checkPathEquality(String expectedText, String actualText) {
         if (expectedText.equals(actualText)) {
-            pass(expectedText, null);
+            pass(null, expectedText, actualText, COMPARE_URL);
         } else {
-            fail(actualText, expectedText, null);
+            fail(null, expectedText, actualText, COMPARE_URL);
         }
     }
 
-
-    private static void pass(String checkpointName, String locator) {
-        if (locator != null) {
-            System.out.println("Element: " + locator + " contains: " + checkpointName);
-        } else
-            System.out.println("Expected URL equal: " + checkpointName);
-    }
-
-    private static void fail(String expectedText, String actualText, String locator) {
-        if (locator != null) {
-            assert false : "\nIn Element: " + locator + "\nActual text is: '" + actualText + "'\nShould be: '" + getValue(expectedText) + "'";
-        } else {
-            assert false : "\nSearched for: '" + actualText + "'\nFound: '" + expectedText + "'";
-        }
-    }
 
     private static void statePass(String locator, ElementsState state) {
-        System.out.println("Element: " + locator + " state is: " + state.getState());
+//        System.out.println("Element: " + locator + " state is: " + state.getState());
     }
 
     private static void stateFail(String locator, ElementsState state) {
-        assert false : "\nIn Element: " + locator + "\nActual state is: '" + state.getOppositeState() + "'\nShould be: '" + state.getState() + "'";
+//        assert false : "\nIn Element: " + locator + "\nActual state is: '" + state.getOppositeState() + "'\nShould be: '" + state.getState() + "'";
     }
 
 }

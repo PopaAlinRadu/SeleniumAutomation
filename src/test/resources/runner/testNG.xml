@@ -12,10 +12,10 @@
         </classes>
     </test>
 
-    <test name="Test2">
-        <classes>
-            <class name="ro.nila.tests.SecondTest" />
-        </classes>
-    </test> <!-- Test -->
+    <!--<test name="Test2">-->
+        <!--<classes>-->
+            <!--<class name="ro.nila.tests.SecondTest" />-->
+        <!--</classes>-->
+    <!--</test> &lt;!&ndash; Test &ndash;&gt;-->
 
 </suite> <!-- Suite -->
