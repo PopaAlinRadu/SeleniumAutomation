@@ -28,32 +28,9 @@ public class Utilities {
         }
     }
 
-    //  ---------------------Method that chose between logger or extent reports-----------------------
+    //  -------------------------------------Method that write in extent reports-----------------------------------------------//
 
-    public static void logSuccessSteps(String locator, String checkpointName, String value) {
-        if (checkpointName == null) {
-            if (test != null) {
-                test.log(LogStatus.PASS, "-> Element " + locator + " found and clicked");
-            } else {
-                // TODO - implement logger
-                System.out.println("Log-> Element '" + locator + "' found and clicked");
-            }
-        } else {
-            if (test != null) {
-                if (locator == null) {
-                    test.log(LogStatus.PASS, "-> Expected URL equals: " + checkpointName);
-                } else {
-                    test.log(LogStatus.PASS, "-> Element " + locator + " contains: " + checkpointName);
-                }
-            } else {
-                // TODO - implement logger
-                System.out.println("Log-> Element '" + locator + "' contains: " + checkpointName);
-            }
-        }
-    }
-
-    public static void updatedLogSuccessSteps(String locator, String expectedValue, String actualValue, Actions action) {
-
+    public static void logSuccessSteps(String locator, String expectedValue, String actualValue, Actions action) {
         if (test != null) {
             switch (action) {
                 case SEARCH:
@@ -75,13 +52,10 @@ public class Utilities {
                     test.log(LogStatus.PASS, "Element [" + locator + "] found. Expected state: [" + expectedValue + "] equal actual state: [" + actualValue + "]");
                     break;
             }
-        } else {
-            //TODO just write in console
         }
     }
 
     public static void logFailedSteps(String locator, String expectedValue, String actualValue, Actions action) {
-
         if (test != null) {
             switch (action) {
                 case SEARCH:
@@ -91,7 +65,7 @@ public class Utilities {
                     test.log(LogStatus.FAIL, "Element [" + locator + "] not found. Couldn't clicked on element");
                     break;
                 case TYPE:
-                    test.log(LogStatus.FAIL, "Element [" + locator + "] not found. Couldn't type value");
+                    test.log(LogStatus.FAIL, "Element [" + locator + "] " + actualValue + ". Couldn't type value");
                     break;
                 case COMPARE_TEXT:
                     test.log(LogStatus.FAIL, "Element [" + locator + "].Expected text: [" + expectedValue + "] actual text: [" + actualValue + "]");
@@ -103,8 +77,55 @@ public class Utilities {
                     test.log(LogStatus.FAIL, "Element [" + locator + "]. Expected state: [" + expectedValue + "] actual state: [" + actualValue + "]");
                     break;
             }
-        } else {
-            //TODO just write in console
         }
     }
+
+    //  -------------------------------------Method that write in console-----------------------------------------------//
+    public static void writeSteps(String locator, String expectedValue, String actualValue, Actions action) {
+        switch (action) {
+            case SEARCH:
+                System.out.println("Element [" + locator + "] found");
+                break;
+            case CLICK:
+                System.out.println("Element [" + locator + "] found and clicked");
+                break;
+            case TYPE:
+                System.out.println("Element [" + locator + "] found and typed value: [" + expectedValue + "]");
+                break;
+            case COMPARE_TEXT:
+                System.out.println("Element [" + locator + "] found. Compared: [" + expectedValue + "] with: [" + actualValue + "]");
+                break;
+            case COMPARE_URL:
+                System.out.println("Expected URL: [" + expectedValue + "] equal actual URL: [" + actualValue + "]");
+                break;
+            case STATE:
+                System.out.println("Element [" + locator + "] found. Expected state: [" + expectedValue + "] equal actual state: [" + actualValue + "]");
+                break;
+        }
+    }
+
+    public static void writeError(String locator, String expectedValue, String actualValue, Actions action) {
+        switch (action) {
+            case SEARCH:
+                assert false : "Element [" + locator + "] not found.";
+                break;
+            case CLICK:
+                assert false : "Element [" + locator + "] not found. Couldn't clicked on element.";
+                break;
+            case TYPE:
+                assert false : "Element [" + locator + "] " + actualValue + ". Couldn't type value.";
+                break;
+            case COMPARE_TEXT:
+                assert false : "Element [" + locator + "].Expected text: [" + expectedValue + "] actual text: [" + actualValue + "].";
+                break;
+            case COMPARE_URL:
+                assert false : "Expected URL: [" + expectedValue + "] actual URL: [" + actualValue + "].";
+                break;
+            case STATE:
+                assert false : "Element [" + locator + "]. Expected state: [" + expectedValue + "] actual state: [" + actualValue + "].";
+                break;
+        }
+    }
+
+
 }
