@@ -4,7 +4,6 @@ import org.testng.annotations.Test;
 import ro.nila.actions.Checkpoints;
 import ro.nila.actions.Commands;
 import ro.nila.base.TestBase;
-import ro.nila.business.Account;
 import ro.nila.business.ElementsState;
 
 import static ro.nila.utilities.Utilities.getTestName;
@@ -58,7 +57,7 @@ public class CheckRegistrationAndDeleteUserFunctionality extends TestBase {
         //  Check if a Manage button is displayed and click on it
         Commands.findElementAndClick("ui.navbar.manageButton.css");
         //  Check if a Settings option is displayed and click on it
-        Commands.findElementAndClick("ui.navbar.settingsButton.css");
+        Commands.findElementAndClick("ui.navbar.manage.settingsButton.css");
         //  Check if user is on Settings Page
         Checkpoints.checkUrl("txt.application.settings");
         //  Check if a Delete User button is displayed and click on it

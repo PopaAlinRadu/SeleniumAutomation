@@ -24,4 +24,5 @@ public class Commands extends CommonActions {
         waitElementToType(By.cssSelector(getValue(locator)), locator, value);
         pass(locator, value, null, TYPE);
     }
+
 }

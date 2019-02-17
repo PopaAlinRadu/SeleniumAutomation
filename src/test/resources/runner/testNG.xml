@@ -8,13 +8,19 @@
 
     <test name="Test1">
         <classes>
-            <class name="ro.nila.tests.CheckLoginFunctionality" />
+            <class name="ro.nila.tests.CheckLoginFunctionality"/>
         </classes>
     </test>
 
     <test name="Test2">
         <classes>
-            <class name="ro.nila.tests.CheckRegistrationAndDeleteUserFunctionality" />
+            <class name="ro.nila.tests.CheckRegistrationAndDeleteUserFunctionality"/>
+        </classes>
+    </test> <!-- Test -->
+
+    <test name="Test3">
+        <classes>
+            <class name="ro.nila.tests.CheckAddRecipeFunctionality" />
         </classes>
     </test> <!-- Test -->
 
