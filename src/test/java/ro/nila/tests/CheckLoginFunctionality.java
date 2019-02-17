@@ -19,8 +19,8 @@ public class CheckLoginFunctionality extends TestBase {
         password = "asd123";
     }
 
-    @Test(description = "On user profile page the name should be displayed and correct")
-    public void testToCheckLoginFunctionality() throws InterruptedException {
+    @Test(description = "Check Login functionality")
+    public void testToCheckLoginFunctionality() {
         System.out.println("----> INSIDE TEST: " + getTestName(this.getClass().getDeclaredMethods()) + " <----");
 
         //  STEPS:
@@ -30,7 +30,7 @@ public class CheckLoginFunctionality extends TestBase {
         //  Check that there is a welcome message on the page
         Checkpoints.checkElementTextToBe("ui.homePage.welcome.css", "txt.home.welcome.message");
         //  Check that a Login button is displayed and click on it
-        Commands.findElementAndClick("ui.loginPage.loginButton.css");
+        Commands.findElementAndClick("ui.navbar.loginButton.css");
         //  Check that form is displayed and contains
         //  Email field
         Commands.findElement("ui.loginPage.emailField.css");

@@ -44,8 +44,11 @@ public abstract class CommonActions {
     protected static WebElement waitElementToType(By by, String locator, String value) {
         String element = "";
         try {
-            driverWait.until(ExpectedConditions.presenceOfElementLocated(by));
-            webElement = webDriver.findElement(by);
+            webElement = (WebElement) driverWait.until(ExpectedConditions.presenceOfElementLocated(by)
+                    .andThen(
+                            webElement -> webElement = webDriver.findElement(by))
+            );
+//            webElement = webDriver.findElement(by);
             try {
                 element = "found";
                 webElement.clear();
