@@ -16,19 +16,19 @@ public class Utilities {
         numberOfMethods = methods.length;
 
         if (numberOfMethods % 2 != 0) {
-            // daca nr de metode = 1, 3, 5, 7
+            // if number of methods = 1, 3, 5, 7
             testName = Array.get(methods, 0).toString();
             testName = testName.substring(11, Array.get(methods, 0).toString().length() - 2);
             return testName;
         } else {
-            // daca nr de metode = 2, 4, 6, 8
+            // if number of methods = 2, 4, 6, 8
             testName = Array.get(methods, 1).toString();
             testName = testName.substring(11, Array.get(methods, 1).toString().length() - 2);
             return testName;
         }
     }
 
-    //  -------------------------------------Method that write in extent reports-----------------------------------------------//
+    //  -------------------------------------Methods that write in extent reports-----------------------------------------------//
 
     public static void logSuccessSteps(String locator, String expectedValue, String actualValue, Actions action) {
         if (test != null) {
@@ -80,7 +80,7 @@ public class Utilities {
         }
     }
 
-    //  -------------------------------------Method that write in console-----------------------------------------------//
+    //  -------------------------------------Methods that write in console-----------------------------------------------//
     public static void writeSteps(String locator, String expectedValue, String actualValue, Actions action) {
         switch (action) {
             case SEARCH:
